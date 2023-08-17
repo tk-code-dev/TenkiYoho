@@ -34,11 +34,57 @@ android {
 
 dependencies {
 
+    // set of Kotlin extensions for the Android platform
     implementation 'androidx.core:core-ktx:1.10.1'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
+    // Google's implementation of the Material Design guidelines for Android
     implementation 'com.google.android.material:material:1.9.0'
+    // AndroidX Support Libraries
+    implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation "androidx.recyclerview:recyclerview:1.3.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
+    implementation "androidx.activity:activity-ktx:1.7.2"
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    // Testing Dependencies
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    // HTTP client library
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11'
+    // logs HTTP requests and responses for debugging purposes
+    implementation 'com.eclipsesource.minimal-json:minimal-json:0.9.5'
+    // lightweight JSON parser and writer
+    implementation 'com.google.code.gson:gson:2.10.1'
+    // make HTTP requests and handle responses
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-simplexml:2.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+    // RxJava observables to handle HTTP requests and responses
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
+    // Kotlin coroutines(async, await)
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
+    // Hilt
+    implementation 'com.google.dagger:hilt-android:2.47'
+    // Navigation
+    implementation 'androidx.navigation:navigation-ui-ktx:2.7.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.0'
+    // Testing Navigation
+    androidTestImplementation("androidx.navigation:navigation-testing:2.7.0")
+    // Feature module Support
+    implementation("androidx.navigation:navigation-dynamic-features-fragment:2.7.0")
+    // Room
+    implementation 'androidx.room:room-runtime:2.5.2'
+    implementation 'androidx.room:room-ktx:2.5.2'
+    implementation 'androidx.room:room-paging:2.5.2'
+    implementation 'androidx.paging:paging-common-ktx:3.2.0'
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.15.1'
+
+    implementation 'com.neovisionaries:nv-i18n:1.29'
 }
