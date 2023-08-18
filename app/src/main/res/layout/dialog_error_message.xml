@@ -1,23 +1,22 @@
 <!-- custom_dialog.xml -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="通信に失敗しました。"
+        android:layout_height="0dp"
+        android:text="@string/network_error_jp"
         android:gravity="center"
         android:layout_margin="36dp"
-        android:layout_weight="2"/>
+        android:layout_weight="1"/>
 
     <Button
         android:id="@+id/dialogButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="36dp"
-        android:text="リトライ"/>
+        android:text="@string/retry_jp"/>
 </LinearLayout>

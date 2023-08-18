@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -12,9 +13,103 @@
         tools:context=".presentation.ui.weather_details.WeatherDetailsFragment">
 
         <TextView
+            android:id="@+id/cityNameTV"
+            android:layout_width="0dp"
+            android:text="@string/tokyo_jp"
+            android:textSize="@dimen/dimen_text_32sp"
+            app:="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline_top"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".5"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/localTimeTV"
+            android:layout_width="0dp"
+            android:text="15:00"
+            android:gravity="right"
+            android:textSize="@dimen/dimen_text_32sp"
+            app:="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/cityNameTV"
+            app:layout_constraintTop_toTopOf="@+id/guideline_top"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".5"
+            android:layout_height="wrap_content"
+            tools:ignore="RtlHardcoded" />
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="weather details" />
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/dimen_32dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_vertical_40"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cityNameTV">
+
+            <ImageView
+                android:layout_width="@dimen/dimen_100dp"
+                android:layout_height="@dimen/dimen_100dp"
+                android:src="@mipmap/ic_launcher_round"
+                android:contentDescription="@string/weather_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen_100dp"
+                android:padding="@dimen/dimen_8dp"
+                android:text="28°"
+                android:textSize="@dimen/dimen_text_64sp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimen_50dp"
+                    android:padding="@dimen/dimen_8dp"
+                    android:text="max 30°"
+                    android:textSize="@dimen/dimen_text_32sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimen_50dp"
+                    android:padding="@dimen/dimen_8dp"
+                    android:text="min 23°"
+                    android:textSize="@dimen/dimen_text_32sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/countries_saved_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline_vertical_40"
+            tools:listitem="@layout/item_weather_card" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_vertical_40"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".4" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

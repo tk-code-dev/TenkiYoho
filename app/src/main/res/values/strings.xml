@@ -1,4 +1,20 @@
 <resources>
     <string name="app_name">TenkiYoho</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="network_error_jp">通信に失敗しました。</string>
+    <string name="retry_jp">リトライ</string>
+    <string name="weather_forecast_jp">天気予報</string>
+    <string name="tokyo">Tokyo</string>
+    <string name="hyogo">Hyogo</string>
+    <string name="oita">Oita</string>
+    <string name="hokkaido">Hokkaido</string>
+    <string name="current_location">Current Location</string>
+    <string name="current_location_jp">現在地</string>
+    <string name="hokkaido_jp">北海道</string>
+    <string name="oita_jp">大分</string>
+    <string name="hyogo_jp">兵庫</string>
+    <string name="tokyo_jp">東京</string>
+    <string name="search">Search</string>
+    <string name="city_name_jp">都市名</string>
+    <string name="weather_icon">weather icon</string>
 </resources>

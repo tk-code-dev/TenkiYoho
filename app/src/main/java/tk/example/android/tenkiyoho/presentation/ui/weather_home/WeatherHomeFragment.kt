@@ -25,13 +25,13 @@ class WeatherHomeFragment : BaseFragment() {
     }
 
     override fun subscribeUi() {
-        binding?.buttonToDetails?.setOnClickListener {
-            showDialog()
+//        binding?.buttonToDetails?.setOnClickListener {
+//            showDialog()
 //            findNavController().navigate(
 //                R.id.action_home_to_details,
 //                null
 //            )
-        }
+//        }
     }
 
     private fun showDialog(){

@@ -7,9 +7,15 @@
     <dimen name="dimen_24dp">24dp</dimen>
     <dimen name="dimen_32dp">32dp</dimen>
     <dimen name="dimen_64dp">64dp</dimen>
+    <dimen name="dimen_50dp">50dp</dimen>
     <dimen name="dimen_100dp">100dp</dimen>
     <dimen name="dimen_200dp">200dp</dimen>
     <dimen name="dimen_250dp">250dp</dimen>
     <dimen name="dimen_400dp">400dp</dimen>
     <dimen name="dimen_500dp">500dp</dimen>
+
+    <dimen name="dimen_text_32sp">32sp</dimen>
+    <dimen name="dimen_text_64sp">64sp</dimen>
+
+
 </resources>
