@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_host"
+    app:startDestination="@id/weatherHomeFragment">
+
+    <fragment
+        android:id="@+id/weatherHomeFragment"
+        android:name="tk.example.android.tenkiyoho.presentation.ui.weather_home.WeatherHomeFragment"
+        android:label="WeatherHomeFragment" >
+        <action
+            android:id="@+id/action_home_to_details"
+            app:destination="@id/weatherDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/weatherDetailsFragment"
+        android:name="tk.example.android.tenkiyoho.presentation.ui.weather_details.WeatherDetailsFragment"
+        android:label="WeatherDetailsFragment" />
+</navigation>
