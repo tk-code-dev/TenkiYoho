@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_view_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        android:backgroundTint="@color/black"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_poster"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_250dp"
+                android:scaleType="fitXY"
+                tools:src="@mipmap/ic_launcher_round" />
+
+            <TextView
+                android:id="@+id/item_poster_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/black"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:lines="2"
+                android:padding="3dp"
+                android:text="@string/tokyo_jp"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="title" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

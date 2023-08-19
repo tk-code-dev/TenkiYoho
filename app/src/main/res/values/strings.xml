@@ -17,4 +17,11 @@
     <string name="search">Search</string>
     <string name="city_name_jp">都市名</string>
     <string name="weather_icon">weather icon</string>
+
+    <string name="decimal_format">%.2f</string>
+    <string name="formatted_number">%1$.2f</string>
+
+    <string name="time_format">%s</string>
+    <string name="formatted_time">%1$s</string>
+
 </resources>

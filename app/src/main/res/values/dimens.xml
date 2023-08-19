@@ -14,6 +14,7 @@
     <dimen name="dimen_400dp">400dp</dimen>
     <dimen name="dimen_500dp">500dp</dimen>
 
+    <dimen name="dimen_text_24sp">24sp</dimen>
     <dimen name="dimen_text_32sp">32sp</dimen>
     <dimen name="dimen_text_64sp">64sp</dimen>
 

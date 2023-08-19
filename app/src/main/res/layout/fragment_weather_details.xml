@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="detailItem"
+            type="tk.example.android.tenkiyoho.domain.model.WeatherResponse" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,9 +17,9 @@
         <TextView
             android:id="@+id/cityNameTV"
             android:layout_width="0dp"
-            android:text="@string/tokyo_jp"
+            tools:text="@string/tokyo_jp"
+            android:gravity="center"
             android:textSize="@dimen/dimen_text_32sp"
-            app:="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline_top"
@@ -25,22 +27,8 @@
             app:layout_constraintWidth_percent=".5"
             android:layout_height="wrap_content"/>
 
-        <TextView
-            android:id="@+id/localTimeTV"
-            android:layout_width="0dp"
-            android:text="15:00"
-            android:gravity="right"
-            android:textSize="@dimen/dimen_text_32sp"
-            app:="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/cityNameTV"
-            app:layout_constraintTop_toTopOf="@+id/guideline_top"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent=".5"
-            android:layout_height="wrap_content"
-            tools:ignore="RtlHardcoded" />
-
         <LinearLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="@dimen/dimen_32dp"
@@ -50,38 +38,55 @@
             app:layout_constraintTop_toBottomOf="@+id/cityNameTV">
 
             <ImageView
+                android:id="@+id/weather_icon_current_iv"
                 android:layout_width="@dimen/dimen_100dp"
                 android:layout_height="@dimen/dimen_100dp"
-                android:src="@mipmap/ic_launcher_round"
-                android:contentDescription="@string/weather_icon" />
+                android:contentDescription="@string/weather_icon"
+                tools:src="@mipmap/ic_launcher_round" />
 
             <TextView
+                android:id="@+id/temp_current_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dimen_100dp"
                 android:padding="@dimen/dimen_8dp"
-                android:text="28°"
-                android:textSize="@dimen/dimen_text_64sp"/>
+                tools:text="28°"
+                android:textSize="@dimen/dimen_text_64sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
+                    android:id="@+id/temp_max_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dimen_50dp"
                     android:padding="@dimen/dimen_8dp"
-                    android:text="max 30°"
-                    android:textSize="@dimen/dimen_text_32sp"/>
+                    tools:text="max 30°"
+                    android:textSize="@dimen/dimen_text_24sp" />
+
                 <TextView
+                    android:id="@+id/temp_min_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dimen_50dp"
                     android:padding="@dimen/dimen_8dp"
-                    android:text="min 23°"
-                    android:textSize="@dimen/dimen_text_32sp"/>
+                    tools:text="min 23°"
+                    android:textSize="@dimen/dimen_text_24sp" />
             </LinearLayout>
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/description_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_50dp"
+            android:padding="@dimen/dimen_8dp"
+            tools:text="description"
+            android:textSize="@dimen/dimen_text_24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/countries_saved_rv"
+            android:id="@+id/weather_rv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"

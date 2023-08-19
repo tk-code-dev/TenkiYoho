@@ -38,65 +38,56 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-                <EditText
-                    android:id="@+id/searchEditText"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableStart="@android:drawable/ic_menu_search"
-                    android:drawablePadding="8dp"
-                    android:hint="@string/city_name_jp"
-                    android:inputType="text" />
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/my_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/textColorPrimaryDark"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/appNameTV">
 
-                <ImageButton
-                    android:id="@+id/searchButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:contentDescription="Search"
-                    android:src="@android:drawable/ic_search_category_default" />
+                    <androidx.appcompat.widget.SearchView
+                        android:id="@+id/search_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:iconifiedByDefault="false"
+                        android:queryHint="Search"
+                        app:iconifiedByDefault="false"
+                        app:queryHint="Search" />
+                </androidx.appcompat.widget.Toolbar>
 
             </LinearLayout>
-
-            <Button
-                style="@style/Widget.Material3.Button.ElevatedButton"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_16dp"
-                android:text="@string/tokyo_jp" />
+                android:layout_height="match_parent"
+                tools:context=".framework.presentation.movie.MovieFragment">
 
-            <Button
-                style="@style/Widget.Material3.Button.ElevatedButton"                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_16dp"
-                android:text="@string/hyogo_jp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <Button
-                style="@style/Widget.Material3.Button.ElevatedButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_16dp"
-                android:text="@string/oita_jp" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/city_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="2"
+                        android:layout_marginBottom="80dp" />
+                </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <Button
-                style="@style/Widget.Material3.Button.ElevatedButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_16dp"
-                android:text="@string/hokkaido_jp" />
-
-            <Button
-                style="@style/Widget.Material3.Button.ElevatedButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_16dp"
-                android:text="@string/current_location_jp" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

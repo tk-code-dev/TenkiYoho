@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/weatherHomeFragment"
         android:name="tk.example.android.tenkiyoho.presentation.ui.weather_home.WeatherHomeFragment"
-        android:label="WeatherHomeFragment" >
+        android:label="WeatherHomeFragment">
         <action
             android:id="@+id/action_home_to_details"
             app:destination="@id/weatherDetailsFragment" />
@@ -15,5 +15,10 @@
     <fragment
         android:id="@+id/weatherDetailsFragment"
         android:name="tk.example.android.tenkiyoho.presentation.ui.weather_details.WeatherDetailsFragment"
-        android:label="WeatherDetailsFragment" />
+        android:label="WeatherDetailsFragment">
+        <argument
+            android:name="city"
+            app:argType="string" />
+    </fragment>
+
 </navigation>

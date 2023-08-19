@@ -4,7 +4,9 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs'
     id 'dagger.hilt.android.plugin'
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -17,8 +19,8 @@ android {
         targetSdk 34
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -98,6 +100,10 @@ dependencies {
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.15.1'
     kapt 'com.github.bumptech.glide:compiler:4.15.1'
-
+    // Coil
+    implementation 'io.coil-kt:coil:2.4.0'
+    androidTestImplementation('com.adevinta.android:barista:4.2.0') {
+        exclude group: 'org.jetbrains.kotlin'
+    }
     implementation 'com.neovisionaries:nv-i18n:1.29'
 }
