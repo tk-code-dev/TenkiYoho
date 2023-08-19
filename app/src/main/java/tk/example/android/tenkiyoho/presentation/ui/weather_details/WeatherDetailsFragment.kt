@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import coil.load
@@ -14,11 +13,10 @@ import tk.example.android.tenkiyoho.BuildConfig
 import tk.example.android.tenkiyoho.databinding.FragmentWeatherDetailsBinding
 import tk.example.android.tenkiyoho.domain.model.Output
 import tk.example.android.tenkiyoho.presentation.ui.base.BaseFragment
-import tk.example.android.tenkiyoho.presentation.ui.weather_home.WeatherHomeViewModel
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
+import java.util.TimeZone
 import javax.inject.Inject
 
 class WeatherDetailsFragment : BaseFragment() {
@@ -26,6 +24,7 @@ class WeatherDetailsFragment : BaseFragment() {
     private var binding: FragmentWeatherDetailsBinding? = null
     private val args: WeatherDetailsFragmentArgs by navArgs()
     private val apiKey = BuildConfig.WEATHER_API_KEY
+    private var timeRange: Int = 1
 
     @Inject
     lateinit var detailsAdapter: DetailsAdapter
@@ -55,8 +54,9 @@ class WeatherDetailsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         cityName = args.city
-        Log.d("city",cityName)
-        detailsViewModel.fetchWeatherData(cityName,apiKey)
+        Log.d("city", cityName)
+        detailsViewModel.fetchWeatherData(cityName, apiKey)
+
     }
 
     override fun subscribeUi() {
@@ -74,30 +74,31 @@ class WeatherDetailsFragment : BaseFragment() {
                         detailsAdapter.update(item.list)
 
                         binding?.cityNameTV?.text = item.city.name
+                        timeRange = checkTimeRange()
 
                         val decimalFormat = DecimalFormat("##.#")
 
-                        binding?.tempCurrentTv?.text = decimalFormat.format(item.list[0].main.temp)
-                        binding?.tempMaxTv?.text = decimalFormat.format(item.list[0].main.temp_max)
-                        binding?.tempMinTv?.text = decimalFormat.format(item.list[0].main.temp_min)
-                        binding?.descriptionTv?.text = item.list[0].weather[0].description.toString()
+                        binding?.tempCurrentTv?.text =
+                            decimalFormat.format(item.list[timeRange].main.temp)
+                        binding?.descriptionTv?.text =
+                            item.list[timeRange].weather[0].description.toString()
 
                         val baseUrl = "http://openweathermap.org/img/wn/"
-                        val imageUrl = "${baseUrl}${item.list[0].weather[0].icon}.png"
+                        val imageUrl = "${baseUrl}${item.list[timeRange].weather[0].icon}.png"
                         binding?.weatherIconCurrentIv?.load(imageUrl) {
                             crossfade(true)
                         }
 
-
-
                     }
                 }
+
                 Output.Status.ERROR -> {
                     result.message?.let {
                         showError("not find the country") {
                         }
                     }
                 }
+
                 Output.Status.LOADING -> {}
             }
         }
@@ -108,7 +109,29 @@ class WeatherDetailsFragment : BaseFragment() {
 //                null
 //            )
 //        }
+
+
     }
 
+    fun checkTimeRange(): Int {
+
+        val currentTimeMillis = System.currentTimeMillis()
+        val date = Date(currentTimeMillis)
+        val sdf = SimpleDateFormat("HH")
+        sdf.timeZone = TimeZone.getDefault()
+        val formattedDate = sdf.format(date)
+
+        val timeRange = when (formattedDate.toDouble()) {
+            in 0.0..10.5 -> 0
+            in 10.5..13.5 -> 1
+            in 13.5..16.5 -> 2
+            in 16.5..19.5 -> 3
+            in 19.5..22.5 -> 4
+            in 22.5..23.0 -> 5
+            else -> 1 // Default value or handle other cases
+        }
+        println("Result: $timeRange")
+        return timeRange.toInt()
+    }
 }
 

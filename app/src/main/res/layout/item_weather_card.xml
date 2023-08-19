@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="end"
-                android:paddingStart="@dimen/dimen_24dp"
+                android:padding="@dimen/dimen_24dp"
                 android:textAppearance="?attr/textAppearanceListItem"
                 android:textSize="24sp"
                 app:doubleFormattedText="@{weather.main.temp}"

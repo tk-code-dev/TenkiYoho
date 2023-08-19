@@ -12,19 +12,20 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import tk.example.android.tenkiyoho.BuildConfig
 import tk.example.android.tenkiyoho.R
 import tk.example.android.tenkiyoho.databinding.FragmentWeatherHomeBinding
 import tk.example.android.tenkiyoho.presentation.ui.base.BaseFragment
 import tk.example.android.tenkiyoho.util.NetworkCheck
-import javax.inject.Inject
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.TimeZone
 
 class WeatherHomeFragment : BaseFragment() {
     private val homeViewModel: WeatherHomeViewModel by activityViewModels()
     private var binding: FragmentWeatherHomeBinding? = null
-//    private lateinit var navController: NavController
+
+    //    private lateinit var navController: NavController
     private lateinit var networkCheck: NetworkCheck
     private val navController by lazy { findNavController() }
 
@@ -65,24 +66,23 @@ class WeatherHomeFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
+}
+
+override fun subscribeUi() {
+
+
+}
+
+
+private val onCityClick: (cityName: String) -> Unit =
+    { cityName ->
+        navigateToDetail(cityName)
     }
 
-    override fun subscribeUi() {
-
-
-
-    }
-
-
-    private val onCityClick: (cityName: String) -> Unit =
-        { cityName ->
-            navigateToDetail(cityName)
-        }
-
-    private fun navigateToDetail(cityName: String) {
-        val action = WeatherHomeFragmentDirections.actionHomeToDetails(cityName)
-        navController.navigate(action)
-    }
+private fun navigateToDetail(cityName: String) {
+    val action = WeatherHomeFragmentDirections.actionHomeToDetails(cityName)
+    navController.navigate(action)
+}
 
 //    private fun navigateToDetail(weatherData: WeatherResponse) {
 //        findNavController().navigate(
@@ -92,17 +92,17 @@ class WeatherHomeFragment : BaseFragment() {
 //        )
 //    }
 
-    private fun showDialog() {
-        val dialog = Dialog(requireContext())
-        dialog.setContentView(R.layout.dialog_error_message)
+private fun showDialog() {
+    val dialog = Dialog(requireContext())
+    dialog.setContentView(R.layout.dialog_error_message)
 
-        val closeButton = dialog.findViewById<Button>(R.id.dialogButton)
-        closeButton.setOnClickListener {
-            dialog.dismiss() // Close the dialog when the button is clicked
-        }
-
-        dialog.show()
-
+    val closeButton = dialog.findViewById<Button>(R.id.dialogButton)
+    closeButton.setOnClickListener {
+        dialog.dismiss() // Close the dialog when the button is clicked
     }
+
+    dialog.show()
+
+}
 
 }
