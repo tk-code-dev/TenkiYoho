@@ -26,7 +26,6 @@ class DetailsAdapter(
             binding.weatherIcon.load(imageUrl) {
                 crossfade(true)
             }
-
         }
     }
 

@@ -23,5 +23,6 @@
 
     <string name="time_format">%s</string>
     <string name="formatted_time">%1$s</string>
+    <string name="city_image_button">City Image Button</string>
 
 </resources>

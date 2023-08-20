@@ -5,43 +5,58 @@
 
     <data>
 
+        <variable
+            name="city_home"
+            type="tk.example.android.tenkiyoho.data.db.WeatherDbEntity" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_view_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
-        android:backgroundTint="@color/black"
         app:cardUseCompatPadding="true">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/img_poster"
+            <ImageView
+                android:id="@+id/img_city"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_250dp"
+                android:layout_height="@dimen/dimen_200dp"
+                android:background="@drawable/blur_drawable"
+                android:contentDescription="@string/city_image_button"
                 android:scaleType="fitXY"
-                tools:src="@mipmap/ic_launcher_round" />
+                android:text="@string/tokyo_jp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/img_tokyo" />
 
             <TextView
-                android:id="@+id/item_poster_title"
+                android:id="@+id/item_city_title"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/black"
-                android:gravity="center"
+                android:layout_height="@dimen/dimen_50dp"
                 android:layout_gravity="center"
-                android:lines="2"
+                android:background="@android:color/transparent"
+                android:gravity="center"
                 android:padding="3dp"
                 android:text="@string/tokyo_jp"
                 android:textColor="@color/white"
-                android:textSize="16sp"
+                android:textSize="@dimen/dimen_text_32sp"
                 android:textStyle="bold"
-                tools:text="title" />
-        </LinearLayout>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/img_city"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="@string/tokyo" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

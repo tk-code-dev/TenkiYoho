@@ -1,15 +1,19 @@
 package tk.example.android.tenkiyoho.presentation.ui.weather_details
 
+import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import coil.load
 import tk.example.android.tenkiyoho.BuildConfig
+import tk.example.android.tenkiyoho.R
 import tk.example.android.tenkiyoho.databinding.FragmentWeatherDetailsBinding
 import tk.example.android.tenkiyoho.domain.model.Output
 import tk.example.android.tenkiyoho.presentation.ui.base.BaseFragment
@@ -25,6 +29,7 @@ class WeatherDetailsFragment : BaseFragment() {
     private val args: WeatherDetailsFragmentArgs by navArgs()
     private val apiKey = BuildConfig.WEATHER_API_KEY
     private var timeRange: Int = 1
+    private var isRetry: Boolean = false
 
     @Inject
     lateinit var detailsAdapter: DetailsAdapter
@@ -94,26 +99,37 @@ class WeatherDetailsFragment : BaseFragment() {
 
                 Output.Status.ERROR -> {
                     result.message?.let {
-                        showError("not find the country") {
-                        }
+                        showDialog()
                     }
                 }
 
                 Output.Status.LOADING -> {}
             }
         }
-//        binding?.buttonToDetails?.setOnClickListener {
-//            showDialog()
-//            findNavController().navigate(
-//                R.id.action_home_to_details,
-//                null
-//            )
-//        }
+    }
 
+    private fun showDialog() {
+        val dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.dialog_error_message)
+
+        val closeButton = dialog.findViewById<Button>(R.id.dialogButton)
+        closeButton.setOnClickListener {
+            if (!isRetry) {
+                isRetry = true
+                dialog.dismiss()
+                detailsViewModel.fetchWeatherData(cityName, apiKey)
+            } else {
+                dialog.dismiss()  // Retry twice and Close the dialog, Back to Home
+                requireActivity().supportFragmentManager.popBackStack()
+            }
+        }
+
+        dialog.show()
 
     }
 
-    fun checkTimeRange(): Int {
+    @SuppressLint("SimpleDateFormat")
+    private fun checkTimeRange(): Int {
 
         val currentTimeMillis = System.currentTimeMillis()
         val date = Date(currentTimeMillis)
@@ -121,6 +137,7 @@ class WeatherDetailsFragment : BaseFragment() {
         sdf.timeZone = TimeZone.getDefault()
         val formattedDate = sdf.format(date)
 
+        // Get the weather from a nearby threshold
         val timeRange = when (formattedDate.toDouble()) {
             in 0.0..10.5 -> 0
             in 10.5..13.5 -> 1
@@ -128,7 +145,7 @@ class WeatherDetailsFragment : BaseFragment() {
             in 16.5..19.5 -> 3
             in 19.5..22.5 -> 4
             in 22.5..23.0 -> 5
-            else -> 1 // Default value or handle other cases
+            else -> 1 // Default value is Daytime
         }
         println("Result: $timeRange")
         return timeRange.toInt()

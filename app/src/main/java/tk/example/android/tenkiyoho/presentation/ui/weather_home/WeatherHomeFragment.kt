@@ -1,6 +1,5 @@
 package tk.example.android.tenkiyoho.presentation.ui.weather_home
 
-import android.app.Dialog
 import android.content.ContentValues
 import android.content.Context
 import android.os.Bundle
@@ -9,25 +8,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import tk.example.android.tenkiyoho.R
+import tk.example.android.tenkiyoho.data.db.WeatherDbEntity
 import tk.example.android.tenkiyoho.databinding.FragmentWeatherHomeBinding
 import tk.example.android.tenkiyoho.presentation.ui.base.BaseFragment
 import tk.example.android.tenkiyoho.util.NetworkCheck
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.TimeZone
+import javax.inject.Inject
 
 class WeatherHomeFragment : BaseFragment() {
     private val homeViewModel: WeatherHomeViewModel by activityViewModels()
     private var binding: FragmentWeatherHomeBinding? = null
-
-    //    private lateinit var navController: NavController
     private lateinit var networkCheck: NetworkCheck
     private val navController by lazy { findNavController() }
+
+    @Inject
+    lateinit var homeAdapter: HomeAdapter
+
+    private val buttonWeatherCityList = listOf(
+        WeatherDbEntity(1, "Tokyo", null, null, "img_tokyo"),
+        WeatherDbEntity(2, "Hyogo", null, null, "img_hyogo"),
+        WeatherDbEntity(3, "Oita", null, null, "img_oita"),
+        WeatherDbEntity(4, "Hokkaido", null, null, "img_hokkaido")
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,45 +68,37 @@ class WeatherHomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        homeAdapter.update(buttonWeatherCityList)
 
+        binding?.currentLocationBtn?.setOnClickListener {
 
-}
+        }
 
-override fun subscribeUi() {
-
-
-}
-
-
-private val onCityClick: (cityName: String) -> Unit =
-    { cityName ->
-        navigateToDetail(cityName)
     }
 
-private fun navigateToDetail(cityName: String) {
-    val action = WeatherHomeFragmentDirections.actionHomeToDetails(cityName)
-    navController.navigate(action)
-}
+    override fun subscribeUi() {
+        binding?.let {
+            homeAdapter = HomeAdapter(arrayListOf(), onCityClick)
+            it.cityRv.adapter = homeAdapter
+        }
+    }
 
-//    private fun navigateToDetail(weatherData: WeatherResponse) {
-//        findNavController().navigate(
-//            R.id.action_home_to_details,
-//            WeatherDetailsFragment.Args(weatherData).toBundle(),
-//            null
-//        )
+    private val onCityClick: (city: WeatherDbEntity) -> Unit =
+        { city ->
+            navigateToDetail(city.city)
+        }
+
+    private fun navigateToDetail(cityName: String) {
+        val action = WeatherHomeFragmentDirections.actionHomeToDetails(cityName)
+        navController.navigate(action)
+    }
+
+//    private fun checkPermissions(): Boolean {
+//        if (
+//            ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
+//                (requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+//            return true
+//        }
+//        return false
 //    }
-
-private fun showDialog() {
-    val dialog = Dialog(requireContext())
-    dialog.setContentView(R.layout.dialog_error_message)
-
-    val closeButton = dialog.findViewById<Button>(R.id.dialogButton)
-    closeButton.setOnClickListener {
-        dialog.dismiss() // Close the dialog when the button is clicked
-    }
-
-    dialog.show()
-
-}
-
 }

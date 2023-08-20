@@ -13,7 +13,7 @@ object BindingAdapters {
     @JvmStatic
     fun setTimeFromDateTime(textView: TextView, dateTime: String) {
         val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-        val outputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("dd日 HH:mm", Locale.getDefault())
 
         val date = inputFormat.parse(dateTime)
         val formattedTime = date?.let { outputFormat.format(it) }
@@ -24,7 +24,8 @@ object BindingAdapters {
     @BindingAdapter("doubleFormattedText")
     @JvmStatic
     fun setDoubleFormattedText(textView: TextView, number: Double) {
-        val decimalFormat = DecimalFormat("##.#")
+        // display even when the fractional part is 0
+        val decimalFormat = DecimalFormat("##.0")
         val formattedNumber = decimalFormat.format(number)
         textView.text = formattedNumber
     }

@@ -1,0 +1,10 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/background">
+        <bitmap android:src="@drawable/img_tokyo" />
+    </item>
+    <item android:id="@+id/overlay">
+        <shape android:shape="rectangle">
+            <solid android:color="#80000000" /> <!-- Semi-transparent black overlay -->
+        </shape>
+    </item>
+</layer-list>

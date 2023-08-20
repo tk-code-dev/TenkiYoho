@@ -9,7 +9,8 @@ data class WeatherDbEntity(
     val weatherId: Int,
     val city: String,
     val cnt: Int?,
-    val list: List<WeatherDataEntity>?
+    val list: List<WeatherDataEntity>?,
+    val img: String
 )
 
 @Entity(tableName = "weather_data")
