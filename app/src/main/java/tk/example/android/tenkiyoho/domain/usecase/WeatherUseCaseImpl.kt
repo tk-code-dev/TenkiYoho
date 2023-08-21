@@ -11,4 +11,8 @@ class WeatherUseCaseImpl @Inject constructor(private val weatherRepository: Weat
     override suspend fun execute(cityName: String, appid: String): Flow<Output<WeatherResponse>> {
         return weatherRepository.fetchWeather(cityName,appid)
     }
+
+    override suspend fun execute(latitude: String, longitude:String, appid: String): Flow<Output<WeatherResponse>> {
+        return weatherRepository.fetchWeather(latitude,longitude,appid)
+    }
 }

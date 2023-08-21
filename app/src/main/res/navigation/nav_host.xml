@@ -19,6 +19,12 @@
         <argument
             android:name="city"
             app:argType="string" />
+        <argument
+            android:name="latitude"
+            app:argType="string" />
+        <argument
+            android:name="longitude"
+            app:argType="string" />
     </fragment>
 
 </navigation>

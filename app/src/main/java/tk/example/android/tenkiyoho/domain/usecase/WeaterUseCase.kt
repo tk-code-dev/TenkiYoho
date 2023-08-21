@@ -6,4 +6,7 @@ import tk.example.android.tenkiyoho.domain.model.WeatherResponse
 
 interface WeatherUseCase {
     suspend fun execute(cityName: String, appid: String): Flow<Output<WeatherResponse>>
+
+    suspend fun execute(latitude: String,longitude:String, appid: String): Flow<Output<WeatherResponse>>
+
 }

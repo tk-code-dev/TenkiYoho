@@ -13,7 +13,10 @@ import javax.inject.Inject
 internal class WeatherRepositoryImpl @Inject constructor(
     private val weatherRemoteDataSource: WeatherRemoteDataSource
 ) : WeatherRepository {
-    override suspend fun fetchWeather(cityName: String, appid: String): Flow<Output<WeatherResponse>> {
+    override suspend fun fetchWeather(
+        cityName: String,
+        appid: String
+    ): Flow<Output<WeatherResponse>> {
         return flow {
             emit(Output.loading())
             val result = weatherRemoteDataSource.fetchWeatherFromRemote(cityName, appid)
@@ -21,4 +24,15 @@ internal class WeatherRepositoryImpl @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
+    override suspend fun fetchWeather(
+        latitude: String,
+        longitude: String,
+        appid: String
+    ): Flow<Output<WeatherResponse>> {
+        return flow {
+            emit(Output.loading())
+            val result = weatherRemoteDataSource.fetchWeatherFromRemote(latitude, longitude, appid)
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
 }

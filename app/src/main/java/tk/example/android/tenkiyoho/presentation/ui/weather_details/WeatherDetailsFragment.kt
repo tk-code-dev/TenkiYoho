@@ -35,6 +35,9 @@ class WeatherDetailsFragment : BaseFragment() {
     lateinit var detailsAdapter: DetailsAdapter
 
     var cityName: String = ""
+    var lat: String = ""
+    var lon: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -53,6 +56,7 @@ class WeatherDetailsFragment : BaseFragment() {
 //                    .inflateTransition(android.R.transition.move)
             root
         }
+
     }
 
 
@@ -60,8 +64,14 @@ class WeatherDetailsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         cityName = args.city
         Log.d("city", cityName)
-        detailsViewModel.fetchWeatherData(cityName, apiKey)
-
+        if(cityName.isNotBlank()) {
+            detailsViewModel.fetchWeatherData(cityName, apiKey)
+        } else {
+            lat = args.latitude
+            lon = args.longitude
+            Log.d("latitude", lat)
+            detailsViewModel.fetchWeatherDataFromLocation(lat, lon, apiKey)
+        }
     }
 
     override fun subscribeUi() {
@@ -93,7 +103,6 @@ class WeatherDetailsFragment : BaseFragment() {
                         binding?.weatherIconCurrentIv?.load(imageUrl) {
                             crossfade(true)
                         }
-
                     }
                 }
 
@@ -103,7 +112,9 @@ class WeatherDetailsFragment : BaseFragment() {
                     }
                 }
 
-                Output.Status.LOADING -> {}
+                Output.Status.LOADING -> {
+
+                }
             }
         }
     }
@@ -139,13 +150,13 @@ class WeatherDetailsFragment : BaseFragment() {
 
         // Get the weather from a nearby threshold
         val timeRange = when (formattedDate.toDouble()) {
-            in 0.0..10.5 -> 0
-            in 10.5..13.5 -> 1
-            in 13.5..16.5 -> 2
-            in 16.5..19.5 -> 3
-            in 19.5..22.5 -> 4
-            in 22.5..23.0 -> 5
-            else -> 1 // Default value is Daytime
+//            in 0.0..10.5 -> 0
+//            in 10.5..13.5 -> 1
+//            in 13.5..16.5 -> 2
+//            in 16.5..19.5 -> 3
+//            in 19.5..22.5 -> 4
+//            in 22.5..23.0 -> 5
+            else -> 2 // Default value is Daytime
         }
         println("Result: $timeRange")
         return timeRange.toInt()

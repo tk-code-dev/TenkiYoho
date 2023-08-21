@@ -8,4 +8,6 @@ interface WeatherRepository {
 
     suspend fun fetchWeather(cityName: String, appid: String): Flow<Output<WeatherResponse>>
 
+    suspend fun fetchWeather(latitude: String, longitude:String, appid: String): Flow<Output<WeatherResponse>>
+
 }

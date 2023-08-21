@@ -10,10 +10,18 @@ object WeatherDatabaseAPI {
     const val BASE_API_URL = "https://api.openweathermap.org/"
 
     interface WeatherService {
-
         @GET("data/$API_VERSION/forecast")
         suspend fun fetch5daysWeather(
             @Query("q") q: String,
+            @Query("appid") appid: String,
+            @Query("units") units: String = "metric",
+            @Query("lang") lang: String = "jp"
+        ): Response<WeatherResponse>
+
+        @GET("data/$API_VERSION/forecast")
+        suspend fun fetch5daysWeatherFromLocation(
+            @Query("lat") lat: String,
+            @Query("lon") lon: String,
             @Query("appid") appid: String,
             @Query("units") units: String = "metric",
             @Query("lang") lang: String = "jp"

@@ -13,7 +13,14 @@ class WeatherRemoteDataSource @Inject constructor(
     suspend fun fetchWeatherFromRemote(cityName: String, appid: String): Output<WeatherResponse> {
         return getResponse(
             request = { apiService.fetch5daysWeather(cityName, appid) },
-            defaultErrorMessage = "Error fetching Photos"
+            defaultErrorMessage = "Error fetching Weather from city name"
+        )
+    }
+
+    suspend fun fetchWeatherFromRemote(latitude: String, longitude: String, appid: String): Output<WeatherResponse> {
+        return getResponse(
+            request = { apiService.fetch5daysWeatherFromLocation(latitude, longitude, appid) },
+            defaultErrorMessage = "Error fetching Weather from location"
         )
     }
 

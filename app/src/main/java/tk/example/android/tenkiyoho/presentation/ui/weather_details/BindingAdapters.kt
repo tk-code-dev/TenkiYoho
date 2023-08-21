@@ -1,9 +1,7 @@
 package tk.example.android.tenkiyoho.presentation.ui.weather_details
 
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
 import android.widget.TextView
-import com.bumptech.glide.Glide
+import androidx.databinding.BindingAdapter
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*

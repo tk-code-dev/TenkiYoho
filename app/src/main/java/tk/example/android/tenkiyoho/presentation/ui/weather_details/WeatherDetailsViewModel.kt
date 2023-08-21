@@ -32,4 +32,12 @@ class WeatherDetailsViewModel @Inject constructor(
         }
     }
 
+    fun fetchWeatherDataFromLocation(latitude: String, longitude: String, appid: String) {
+        viewModelScope.launch {
+            weatherUseCase.execute(latitude, longitude, appid).collect {
+                _weatherList.value = it
+            }
+        }
+    }
+
 }
