@@ -45,7 +45,6 @@
                 android:layout_gravity="center"
                 android:background="@android:color/transparent"
                 android:gravity="center"
-                android:padding="3dp"
                 android:text="@string/tokyo_jp"
                 android:textColor="@color/white"
                 android:textSize="@dimen/dimen_text_32sp"

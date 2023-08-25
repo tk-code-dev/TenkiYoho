@@ -44,11 +44,11 @@ class WeatherHomeFragment : BaseFragment(), LocationListener {
     @Inject
     lateinit var homeAdapter: HomeAdapter
 
-    private val buttonWeatherCityList = listOf(
-        WeatherDbEntity(1, "Tokyo", null, null, "img_tokyo"),
-        WeatherDbEntity(2, "Hyogo", null, null, "img_hyogo"),
-        WeatherDbEntity(3, "Oita", null, null, "img_oita"),
-        WeatherDbEntity(4, "Hokkaido", null, null, "img_hokkaido")
+    private var buttonWeatherCityList = listOf(
+        WeatherDbEntity("Tokyo", null, null, "img_tokyo"),
+        WeatherDbEntity("Hyogo", null, null, "img_hyogo"),
+        WeatherDbEntity("Oita", null, null, "img_oita"),
+        WeatherDbEntity("Hokkaido", null, null, "img_hokkaido")
     )
 
     private lateinit var locationManager: LocationManager
@@ -84,7 +84,7 @@ class WeatherHomeFragment : BaseFragment(), LocationListener {
                         requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     inputMethodManager.hideSoftInputFromWindow(binding?.searchView?.windowToken, 0)
                     binding?.searchView?.setQuery(null, false)
-                    navigateToDetail(it,"","") //,null,null)
+                    navigateToDetail(it,"","")
                 }
                 return true
             }
@@ -122,6 +122,7 @@ class WeatherHomeFragment : BaseFragment(), LocationListener {
             homeAdapter = HomeAdapter(arrayListOf(), onCityClick)
             it.cityRv.adapter = homeAdapter
         }
+        binding?.progressSpinner?.visibility = View.INVISIBLE
     }
 
     private val onCityClick: (city: WeatherDbEntity) -> Unit =
@@ -167,12 +168,14 @@ class WeatherHomeFragment : BaseFragment(), LocationListener {
 
         locationManager.requestLocationUpdates(
             LocationManager.GPS_PROVIDER,
-            1000,
-            50f,
+            10000,
+            500f,
             this
         )
+        binding?.progressSpinner?.visibility = View.VISIBLE
 
         if(latitude.isNotBlank()){
+            binding?.progressSpinner?.visibility = View.INVISIBLE
             navigateToDetail("",String.format("%.${precision}f", latitude.toDouble()), String.format("%.${precision}f", longitude.toDouble()))
         }
     }
@@ -180,6 +183,7 @@ class WeatherHomeFragment : BaseFragment(), LocationListener {
     override fun onLocationChanged(location: Location) {
         latitude = location.latitude.toString()
         longitude = location.longitude.toString()
+        binding?.progressSpinner?.visibility = View.INVISIBLE
 
         navigateToDetail("",String.format("%.${precision}f", latitude.toDouble()), String.format("%.${precision}f", longitude.toDouble()))
     }

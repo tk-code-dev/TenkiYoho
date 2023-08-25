@@ -17,15 +17,16 @@
         <TextView
             android:id="@+id/cityNameTV"
             android:layout_width="0dp"
-            tools:text="@string/tokyo_jp"
+            android:layout_height="wrap_content"
             android:gravity="center"
+            android:textColor="@color/black"
             android:textSize="@dimen/dimen_text_32sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline_top"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent=".5"
-            android:layout_height="wrap_content"/>
+            tools:text="@string/tokyo_jp" />
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -49,52 +50,59 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dimen_100dp"
                 android:padding="@dimen/dimen_8dp"
-                tools:text="28°"
-                android:textSize="@dimen/dimen_text_64sp" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_text_48sp"
+                tools:text="28°" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_8dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/temp_max_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dimen_50dp"
-                    android:padding="@dimen/dimen_8dp"
-                    tools:text="max 30°"
-                    android:textSize="@dimen/dimen_text_24sp" />
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_text_16sp"
+                    tools:text="max 30°" />
 
                 <TextView
                     android:id="@+id/temp_min_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dimen_50dp"
-                    android:padding="@dimen/dimen_8dp"
-                    tools:text="min 23°"
-                    android:textSize="@dimen/dimen_text_24sp" />
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_text_16sp"
+                    tools:text="min 23°" />
             </LinearLayout>
         </LinearLayout>
 
         <TextView
             android:id="@+id/description_tv"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dimen_50dp"
+            android:layout_height="wrap_content"
             android:padding="@dimen/dimen_8dp"
-            tools:text="description"
+            android:textColor="@color/black"
             android:textSize="@dimen/dimen_text_24sp"
             app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="description" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/weather_rv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_16dp"
             android:background="@color/white"
+            android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline_vertical_40"
             tools:listitem="@layout/item_weather_card" />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_top"
             android:layout_width="wrap_content"
@@ -116,5 +124,8 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent=".5" />
 
+        <include
+            android:id="@+id/progressSpinner"
+            layout="@layout/item_progress_spinner" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

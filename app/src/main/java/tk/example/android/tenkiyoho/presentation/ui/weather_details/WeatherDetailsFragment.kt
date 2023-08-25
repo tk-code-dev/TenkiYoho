@@ -10,17 +10,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
 import tk.example.android.tenkiyoho.BuildConfig
 import tk.example.android.tenkiyoho.R
+import tk.example.android.tenkiyoho.data.db.WeatherDataEntity
 import tk.example.android.tenkiyoho.databinding.FragmentWeatherDetailsBinding
 import tk.example.android.tenkiyoho.domain.model.Output
 import tk.example.android.tenkiyoho.presentation.ui.base.BaseFragment
 import java.text.DecimalFormat
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.TimeZone
 import javax.inject.Inject
 
 class WeatherDetailsFragment : BaseFragment() {
@@ -28,7 +27,6 @@ class WeatherDetailsFragment : BaseFragment() {
     private var binding: FragmentWeatherDetailsBinding? = null
     private val args: WeatherDetailsFragmentArgs by navArgs()
     private val apiKey = BuildConfig.WEATHER_API_KEY
-    private var timeRange: Int = 1
     private var isRetry: Boolean = false
 
     @Inject
@@ -38,11 +36,6 @@ class WeatherDetailsFragment : BaseFragment() {
     var lat: String = ""
     var lon: String = ""
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,20 +44,15 @@ class WeatherDetailsFragment : BaseFragment() {
 
         with(it) {
             lifecycleOwner = this@WeatherDetailsFragment
-//            sharedElementEnterTransition =
-//                TransitionInflater.from(requireContext())
-//                    .inflateTransition(android.R.transition.move)
             root
         }
-
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         cityName = args.city
         Log.d("city", cityName)
-        if(cityName.isNotBlank()) {
+        if (cityName.isNotBlank()) {
             detailsViewModel.fetchWeatherData(cityName, apiKey)
         } else {
             lat = args.latitude
@@ -74,6 +62,7 @@ class WeatherDetailsFragment : BaseFragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun subscribeUi() {
         binding?.let {
             detailsAdapter = DetailsAdapter(arrayListOf())
@@ -83,37 +72,53 @@ class WeatherDetailsFragment : BaseFragment() {
             when (result.status) {
                 Output.Status.SUCCESS -> {
                     result.data?.let { item ->
-//                        Log.d("test",SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.ENGLISH).format(Date((item.cnt*1000).toString())))
 
                         Log.d(ContentValues.TAG, "success:$item")
                         detailsAdapter.update(item.list)
 
                         binding?.cityNameTV?.text = item.city.name
-                        timeRange = checkTimeRange()
 
-                        val decimalFormat = DecimalFormat("##.#")
+                        val decimalFormat = DecimalFormat("##.0")
 
-                        binding?.tempCurrentTv?.text =
-                            decimalFormat.format(item.list[timeRange].main.temp)
+                        binding?.tempCurrentTv?.text = decimalFormat.format(item.list[0].main.temp)
+
+                        binding?.tempMaxTv?.text =
+                            "最高 " + decimalFormat.format(item.list[0].main.temp_max)
+
+                        binding?.tempMinTv?.text =
+                            "最低 " + decimalFormat.format(item.list[0].main.temp_min)
+
                         binding?.descriptionTv?.text =
-                            item.list[timeRange].weather[0].description.toString()
+                            item.list[0].weather[0].description.toString()
 
                         val baseUrl = "http://openweathermap.org/img/wn/"
-                        val imageUrl = "${baseUrl}${item.list[timeRange].weather[0].icon}.png"
+                        val imageUrl = "${baseUrl}${item.list[0].weather[0].icon}.png"
                         binding?.weatherIconCurrentIv?.load(imageUrl) {
                             crossfade(true)
                         }
+
+                        for (weatherData in item.list) {
+                            val weatherDataList = WeatherDataEntity(
+                                dt = weatherData.dt,
+                                temp = weatherData.main.temp,
+                                icon = weatherData.weather[0].icon
+                            )
+                        }
                     }
+                    binding?.progressSpinner?.visibility = View.INVISIBLE
                 }
 
                 Output.Status.ERROR -> {
                     result.message?.let {
-                        showDialog()
+                        if (it.contains("from city name")) {
+                            showDialog()
+                        }
                     }
+                    binding?.progressSpinner?.visibility = View.INVISIBLE
                 }
 
                 Output.Status.LOADING -> {
-
+                    binding?.progressSpinner?.visibility = View.VISIBLE
                 }
             }
         }
@@ -125,41 +130,27 @@ class WeatherDetailsFragment : BaseFragment() {
 
         val closeButton = dialog.findViewById<Button>(R.id.dialogButton)
         closeButton.setOnClickListener {
-            if (!isRetry) {
+            if (!isRetry && isAlphabetic(cityName)) {
                 isRetry = true
-                dialog.dismiss()
                 detailsViewModel.fetchWeatherData(cityName, apiKey)
+
             } else {
                 dialog.dismiss()  // Retry twice and Close the dialog, Back to Home
-                requireActivity().supportFragmentManager.popBackStack()
+                try {
+                    val currentDestination = findNavController().currentDestination
+                    if (currentDestination?.id == R.id.weatherDetailsFragment) {
+                        findNavController().popBackStack()
+                    }
+                } catch (e: IllegalStateException) {
+                    Log.e("from WeatherDetails", "screen has moved WeatherHome")
+                }
             }
         }
-
         dialog.show()
-
     }
 
-    @SuppressLint("SimpleDateFormat")
-    private fun checkTimeRange(): Int {
-
-        val currentTimeMillis = System.currentTimeMillis()
-        val date = Date(currentTimeMillis)
-        val sdf = SimpleDateFormat("HH")
-        sdf.timeZone = TimeZone.getDefault()
-        val formattedDate = sdf.format(date)
-
-        // Get the weather from a nearby threshold
-        val timeRange = when (formattedDate.toDouble()) {
-//            in 0.0..10.5 -> 0
-//            in 10.5..13.5 -> 1
-//            in 13.5..16.5 -> 2
-//            in 16.5..19.5 -> 3
-//            in 19.5..22.5 -> 4
-//            in 22.5..23.0 -> 5
-            else -> 2 // Default value is Daytime
-        }
-        println("Result: $timeRange")
-        return timeRange.toInt()
+    private fun isAlphabetic(input: String): Boolean {
+        return input.matches(Regex("[a-zA-Z]+"))
     }
 }
 
