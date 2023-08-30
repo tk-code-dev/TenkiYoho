@@ -20,12 +20,8 @@ data class WeatherData(
     val dt: Long,
     val main: WeatherMain,
     val weather: List<Weather>,
-    val clouds: Clouds,
-    val wind: Wind,
     val visibility: Int,
     val pop: Double,
-    val rain: Rain?,
-    val sys: Sys,
     val dt_txt: String
 ) : Parcelable
 
@@ -50,32 +46,6 @@ data class Weather(
     val main: String,
     val description: String,
     val icon: String
-) : Parcelable
-
-@Keep
-@Parcelize
-data class Clouds(
-    val all: Int
-) : Parcelable
-
-@Keep
-@Parcelize
-data class Wind(
-    val speed: Double,
-    val deg: Int,
-    val gust: Double
-) : Parcelable
-
-@Keep
-@Parcelize
-data class Rain(
-    val h: Double
-) : Parcelable
-
-@Keep
-@Parcelize
-data class Sys(
-    val pod: String
 ) : Parcelable
 
 @Keep

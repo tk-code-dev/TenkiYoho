@@ -94,14 +94,12 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.5.2'
     implementation 'androidx.room:room-ktx:2.5.2'
     implementation 'androidx.room:room-paging:2.5.2'
-    implementation 'androidx.paging:paging-common-ktx:3.2.0'
     kapt 'androidx.room:room-compiler:2.5.2'
     // Coil
     implementation 'io.coil-kt:coil:2.4.0'
     androidTestImplementation('com.adevinta.android:barista:4.2.0') {
         exclude group: 'org.jetbrains.kotlin'
     }
-    implementation 'com.neovisionaries:nv-i18n:1.29'
 
     implementation 'com.google.android.gms:play-services-location:21.0.1'
 
